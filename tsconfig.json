@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,7 +14,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "fonts/*": ["fonts/*"],
+      "images/*": ["images/*"],
+      "constants/*": ["constants/*"],
+      "components/*": ["components/*"],
+      "pages/*": ["pages/*"],
+      "scss/*": ["scss/*"],
+      "services/*": ["services/*"],
+      "utils/*": ["utils/*"],
+      "types/*": ["types/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }
