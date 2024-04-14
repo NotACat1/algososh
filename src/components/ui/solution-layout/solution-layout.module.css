@@ -1,5 +1,5 @@
 .content {
-  background-image: url("../../../images/bg.jpg");
+  /*background-image: url("../../../images/bg.jpg");*/
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
@@ -42,5 +42,11 @@
 }
 
 .link {
+  display: block;
   text-decoration: none;
+  width: fit-content;
+}
+
+.title {
+  text-align: center;
 }

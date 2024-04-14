@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const currentIcon =
     sorting === Direction.Ascending ? <AscendingIcon /> : <DescendingIcon />;
-  const className = `text text_type_button text_color_primary ${
+  const className = `text_type_button text_color_primary ${
     styles.button
   } ${linkedList && styles[linkedList]} ${
     isLoader && styles.loader
