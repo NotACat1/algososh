@@ -1,0 +1,93 @@
+// Подключение библиотек
+import React, { FC, ChangeEvent, useState } from 'react';
+
+// Подключение компонентов
+import { SolutionLayout } from 'components/ui/solution-layout/solution-layout';
+import { Input } from 'components/ui/input/input';
+import { Button } from 'components/ui/button/button';
+import { Circle } from 'components/ui/circle/circle';
+
+// Подключение таблиц стилей
+import styles from './fibonacci-page.module.scss';
+import { animate } from './fibonacci.utils';
+import { SHORT_DELAY_IN_MS } from 'constants/delays';
+
+// Подключение интерфейсов
+import { IElementArray } from 'types/element-array';
+
+const FibonacciPage: FC = () => {
+  // состояние для элементов строки
+  const [inputValue, setInputValue] = useState<string>('');
+  const [elementsArray, setElementsArray] = useState<IElementArray[]>([]);
+  const [isAnimated, setIsAnimated] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setIsAnimated(true);
+    animate(parseInt(inputValue), SHORT_DELAY_IN_MS, setElementsArray).then(() => {
+      setIsAnimated(false);
+      setInputValue('');
+    });
+  };
+
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const newValue = evt.target.value.replace(/\D/g, '');
+    setInputValue(newValue);
+  };
+
+  const elementsCircles =
+    elementsArray.length === 0
+      ? null
+      : elementsArray
+          .reduce((acc: JSX.Element[][], element, index) => {
+            const chunkIndex = Math.floor(index / 10);
+
+            if (!acc[chunkIndex]) {
+              acc[chunkIndex] = [];
+            }
+
+            acc[chunkIndex].push(
+              <Circle
+                letter={element.content}
+                state={element.state}
+                key={element.key}
+                tail={index.toString()}
+              />,
+            );
+
+            return acc;
+          }, [])
+          .map((row, index) => (
+            <div key={index} className={styles.circles__row}>
+              {row}
+            </div>
+          ));
+
+  return (
+    <SolutionLayout title="Последовательность Фибоначчи">
+      <>
+        <div className={styles.container}>
+          <div className={styles.input}>
+            <Input
+              max={19}
+              isLimitText={true}
+              type="number"
+              disabled={isAnimated}
+              onChange={handleChange}
+              extraClass={styles.input__input}
+              value={inputValue}
+            />
+            <Button
+              text="Развернуть"
+              disabled={isAnimated || inputValue == ''}
+              onClick={handleClick}
+              isLoader={isAnimated}
+            />
+          </div>
+          <div className={styles.circles}>{elementsCircles}</div>
+        </div>
+      </>
+    </SolutionLayout>
+  );
+};
+
+export default FibonacciPage;

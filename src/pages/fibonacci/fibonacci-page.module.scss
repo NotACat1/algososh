@@ -1,0 +1,28 @@
+.container {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.input {
+  width: 567px;
+  display: flex;
+  gap: 12px;
+
+  &__input {
+    flex: 1 1 0;
+  }
+}
+
+.circles {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  &__row {
+    display: flex;
+    gap: 16px;
+  }
+}

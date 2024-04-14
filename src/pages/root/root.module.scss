@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.content {
+  width: 1280px;
+  margin: 0 auto;
+
+  &_header {
+    display: flex;
+    align-items: end;
+  }
+
+  &_footer {
+    margin: 28px auto 0;
+  }
+}
+
+.copyright {
+  text-align: right;
+  padding-bottom: 18px;
+  width: 1240px;
+}
+
+.title {
+  display: inline-block;
+  line-height: 152px;
+  text-align: left;
+
+  &_main {
+    text-align: center;
+  }
+
+  &__subtitle {
+    margin: auto 0 8px 7px;
+
+    &_main {
+      display: inline-block;
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+      margin-left: -6px;
+    }
+  }
+}
