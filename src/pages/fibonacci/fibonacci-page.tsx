@@ -11,6 +11,7 @@ import { Circle } from 'components/ui/circle/circle';
 import styles from './fibonacci-page.module.scss';
 import { animate } from './fibonacci.utils';
 import { SHORT_DELAY_IN_MS } from 'constants/delays';
+import isValidIntegerInRange from 'utills/is-validInteger-in-range';
 
 // Подключение интерфейсов
 import { IElementArray } from 'types/element-array';
@@ -23,10 +24,12 @@ const FibonacciPage: FC = () => {
 
   const handleClick = () => {
     setIsAnimated(true);
-    animate(parseInt(inputValue), SHORT_DELAY_IN_MS, setElementsArray).then(() => {
-      setIsAnimated(false);
-      setInputValue('');
-    });
+    animate(parseInt(inputValue), SHORT_DELAY_IN_MS, setElementsArray).then(
+      () => {
+        setIsAnimated(false);
+        setInputValue('');
+      },
+    );
   };
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -68,9 +71,11 @@ const FibonacciPage: FC = () => {
         <div className={styles.container}>
           <div className={styles.input}>
             <Input
+              min={0}
               max={19}
-              isLimitText={true}
+              step={1}
               type="number"
+              isLimitText={true}
               disabled={isAnimated}
               onChange={handleChange}
               extraClass={styles.input__input}
@@ -78,7 +83,7 @@ const FibonacciPage: FC = () => {
             />
             <Button
               text="Развернуть"
-              disabled={isAnimated || inputValue == ''}
+              disabled={isAnimated || inputValue == ''  || !isValidIntegerInRange(inputValue, 0, 19)}
               onClick={handleClick}
               isLoader={isAnimated}
             />
