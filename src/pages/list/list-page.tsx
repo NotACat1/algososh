@@ -13,6 +13,7 @@ import { ArrowIcon } from 'components/ui/icons/arrow-icon';
 import styles from './list.module.scss';
 import { SHORT_DELAY_IN_MS } from 'constants/delays';
 import LinkedList from 'utills/LinkedList';
+import isValidIntegerInRange from 'utills/is-validInteger-in-range';
 import {
   animationAddHead,
   animationAddTail,
@@ -234,6 +235,10 @@ const ListPage: FC = () => {
               }
             />
             <Input
+              min={0}
+              max={linkedList.toArray().length}
+              step={1}
+              type="number"
               maxLength={linkedList.toArray().length - 1}
               isLimitText={true}
               disabled={animation.isAnimation}
@@ -246,7 +251,12 @@ const ListPage: FC = () => {
                 animation.isAnimation ||
                 inputValue == '' ||
                 inputIndex == '' ||
-                linkedList.toArray().length === 10
+                linkedList.toArray().length === 10 ||
+                !isValidIntegerInRange(
+                  inputIndex,
+                  0,
+                  linkedList.toArray().length,
+                )
               }
               onClick={handleClickAddIndex}
               isLoader={
@@ -259,7 +269,12 @@ const ListPage: FC = () => {
               disabled={
                 animation.isAnimation ||
                 inputIndex == '' ||
-                linkedList.toArray().length === 0
+                linkedList.toArray().length === 0 ||
+                !isValidIntegerInRange(
+                  inputIndex,
+                  0,
+                  linkedList.toArray().length,
+                )
               }
               onClick={handleClickRemoveIndex}
               isLoader={
