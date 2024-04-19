@@ -76,7 +76,7 @@ const QueuePage: FC = () => {
         state={element.value.state}
         key={element.key}
         index={index}
-        head={index === 0 ? 'head' : ''}
+        head={index === 0  && queue.length() != 0 ? 'head' : ''}
         tail={index === queue.length() - 1 ? 'tail' : ''}
       />
     );
