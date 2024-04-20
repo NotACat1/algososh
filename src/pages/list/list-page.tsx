@@ -236,10 +236,18 @@ const ListPage: FC = () => {
             />
             <Input
               min={0}
-              max={linkedList.toArray().length}
+              max={
+                linkedList.toArray().length === 10
+                  ? 9
+                  : linkedList.toArray().length
+              }
               step={1}
               type="number"
-              maxLength={linkedList.toArray().length - 1}
+              maxLength={
+                linkedList.toArray().length <= 0
+                  ? 0
+                  : linkedList.toArray().length
+              }
               isLimitText={true}
               disabled={animation.isAnimation}
               onChange={handleChangeIndex}
@@ -255,7 +263,9 @@ const ListPage: FC = () => {
                 !isValidIntegerInRange(
                   inputIndex,
                   0,
-                  linkedList.toArray().length,
+                  linkedList.toArray().length <= 0
+                    ? 0
+                    : linkedList.toArray().length,
                 )
               }
               onClick={handleClickAddIndex}
@@ -273,7 +283,9 @@ const ListPage: FC = () => {
                 !isValidIntegerInRange(
                   inputIndex,
                   0,
-                  linkedList.toArray().length,
+                  linkedList.toArray().length <= 0
+                    ? 0
+                    : linkedList.toArray().length,
                 )
               }
               onClick={handleClickRemoveIndex}
