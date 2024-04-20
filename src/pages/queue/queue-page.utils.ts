@@ -21,10 +21,11 @@ async function animateRemove(
   queue: Queue<IElementArray>,
   animationTime: number,
 ) {
-  const head = queue.toArray()[0];
+  const indexHead = queue.getIndexHead();
+  const head = queue.toArray()[indexHead];
   if (!head) return;
   head.value.state = ElementStates.Changing;
-  queue.update(0, head.value);
+  queue.update(indexHead, head.value);
   await delay(animationTime);
   queue.dequeue();
 }

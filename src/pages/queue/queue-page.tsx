@@ -76,14 +76,21 @@ const QueuePage: FC = () => {
         state={element.value.state}
         key={element.key}
         index={index}
-        head={index === 0  && queue.length() != 0 ? 'head' : ''}
-        tail={index === queue.length() - 1 ? 'tail' : ''}
+        head={
+          queue.getIndexHead() == index && queue.getSize() != 0 ? 'head' : ''
+        }
+        tail={
+          queue.getIndexHead() + queue.getSize() - 1 == index &&
+          queue.getSize() != 0
+            ? 'tail'
+            : ''
+        }
       />
     );
   });
 
   return (
-    <SolutionLayout title="Стек">
+    <SolutionLayout title="Очередь">
       <>
         <div className={styles.container}>
           <div className={styles.content}>
@@ -101,7 +108,7 @@ const QueuePage: FC = () => {
                 disabled={
                   animation.isAnimation ||
                   inputValue == '' ||
-                  queue.length() == maxSize
+                  queue.getIndexHead() + queue.getSize() == maxSize
                 }
                 onClick={handleClickAdd}
                 isLoader={
@@ -110,7 +117,7 @@ const QueuePage: FC = () => {
               />
               <Button
                 text="Удалить"
-                disabled={queue.length() == 0 || animation.isAnimation}
+                disabled={queue.getSize() == 0 || animation.isAnimation}
                 onClick={handleClickDelete}
                 isLoader={
                   animation.isAnimation &&
@@ -120,7 +127,7 @@ const QueuePage: FC = () => {
             </div>
             <Button
               text="Очистить"
-              disabled={queue.length() == 0 || animation.isAnimation}
+              disabled={queue.getSize() == 0 || animation.isAnimation}
               onClick={handleClickDeleteAll}
               isLoader={
                 animation.isAnimation && animation.animation == Animations.Clear
