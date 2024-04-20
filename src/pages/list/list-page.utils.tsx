@@ -184,14 +184,14 @@ async function animationAddIndex(
   const copyLinkedList = createNewLinkedList(linkedList);
   const arrayLinkedList = copyLinkedList.toArray();
 
-  if (arrayLinkedList.length - 1 < index) {
-    return;
+  if (arrayLinkedList.length == 0) {
+    return animationAddHead(newElement, linkedList, animationTime, setLinkedList);
   }
 
   newElement.state = ElementStates.Changing;
 
   let i = 0;
-  while (i <= index) {
+  while (i <= index && i < arrayLinkedList.length) {
     const element = arrayLinkedList[i];
     element.state = ElementStates.Changing;
     element.head = creatSmallCircle(newElement);
