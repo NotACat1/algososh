@@ -1,18 +1,30 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import "./fonts/fonts.css";
-import "./components/ui/common.css";
-import "./components/ui/box.css";
-import App from "./components/app/app";
-import reportWebVitals from "./reportWebVitals";
+// Подключение библиотек
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+// Подключение компонентов
+import App from './components/app/app';
+
+// Подключение таблиц стилей и функций
+import 'normalize.css';
+import './index.css';
+import './fonts/fonts.css';
+import 'components/ui/common.css';
+import 'components/ui/box.css';
+
+import reportWebVitals from './reportWebVitals';
+
+const rootElement = document.getElementById('root');
+
+// Рендеринг основного компонента
+if (rootElement) {
+  const root = createRoot(rootElement as HTMLElement);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
