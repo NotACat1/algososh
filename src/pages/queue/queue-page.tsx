@@ -102,6 +102,7 @@ const QueuePage: FC = () => {
                 onChange={handleChange}
                 extraClass={styles.content__input}
                 value={inputValue}
+                data-testid="custom-input"
               />
               <Button
                 text="Добавить"
@@ -114,6 +115,7 @@ const QueuePage: FC = () => {
                 isLoader={
                   animation.isAnimation && animation.animation == Animations.Add
                 }
+                data-testid="custom-add"
               />
               <Button
                 text="Удалить"
