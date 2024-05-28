@@ -4,5 +4,4 @@ export interface IElementArray {
   content: string;
   state: ElementStates;
   key: string;
-  
 }
