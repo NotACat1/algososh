@@ -31,12 +31,10 @@ const StackPage: FC = () => {
   const [stack, setStack] = useState<Stack<IElementArray>>(
     new Stack<IElementArray>(),
   );
-  const [animation, setAnimation] =
-    useState <
-    IStateAnimation<Animations>>({
-      animation: null,
-      isAnimation: false,
-    });
+  const [animation, setAnimation] = useState<IStateAnimation<Animations>>({
+    animation: null,
+    isAnimation: false,
+  });
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setInputValue(evt.target.value);
@@ -96,6 +94,7 @@ const StackPage: FC = () => {
                 onChange={handleChange}
                 extraClass={styles.content__input}
                 value={inputValue}
+                data-testid="custom-input"
               />
               <Button
                 text="Добавить"
@@ -108,6 +107,7 @@ const StackPage: FC = () => {
                 isLoader={
                   animation.isAnimation && animation.animation == Animations.Add
                 }
+                data-testid="custom-add"
               />
               <Button
                 text="Удалить"
