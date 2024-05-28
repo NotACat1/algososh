@@ -54,4 +54,4 @@ async function animate(
   }
 }
 
-export { animate };
+export { animate, animateSwap };

@@ -49,6 +49,7 @@ const RecursionPage: FC = () => {
               letter={element.content}
               state={element.state}
               key={element.key}
+              data-testid="custom-circle"
             />
           );
         });
@@ -65,12 +66,14 @@ const RecursionPage: FC = () => {
               onChange={handleChange}
               extraClass={styles.input__input}
               value={inputValue}
+              data-testid="custom-input"
             />
             <Button
               text="Развернуть"
               disabled={inputValue.length == 0 || isAnimated}
               onClick={handleClick}
               isLoader={isAnimated}
+              data-testid="custom-button"
             />
           </div>
           <div className={styles.circles}>{elementsCircles}</div>
