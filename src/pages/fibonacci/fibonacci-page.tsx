@@ -50,11 +50,10 @@ const FibonacciPage: FC = () => {
 
             acc[chunkIndex].push(
               <Circle
+                index={index}
                 letter={element.content}
                 state={element.state}
                 key={element.key}
-                tail={index.toString()}
-                data-testid="custom-circle"
               />,
             );
 
@@ -81,7 +80,7 @@ const FibonacciPage: FC = () => {
               onChange={handleChange}
               extraClass={styles.input__input}
               value={inputValue}
-              data-testid="custom-input"
+              id="input"
             />
             <Button
               text="Развернуть"
@@ -92,7 +91,7 @@ const FibonacciPage: FC = () => {
               }
               onClick={handleClick}
               isLoader={isAnimated}
-              data-testid="custom-button"
+              id="button"
             />
           </div>
           <div className={styles.circles}>{elementsCircles}</div>
