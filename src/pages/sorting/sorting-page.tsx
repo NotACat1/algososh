@@ -78,7 +78,7 @@ const SortingPage: FC = () => {
         });
 
   return (
-    <SolutionLayout title="Строка">
+    <SolutionLayout title="Сортировка массива">
       <>
         <div className={styles.container}>
           <div className={styles.inputs}>
