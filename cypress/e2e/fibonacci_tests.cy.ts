@@ -1,5 +1,6 @@
+import { SHORT_DELAY_IN_MS as DELAY, colorDefault } from './constants';
+
 describe('Fibonacci manipulation tests', () => {
-  let animationDelay: number;
   let fibonacciSequence: string[];
 
   beforeEach(() => {
@@ -7,7 +8,6 @@ describe('Fibonacci manipulation tests', () => {
 
     cy.get('input#input').as('input');
     cy.get('button#button').as('button');
-    animationDelay = 500;
     fibonacciSequence = [
       '0',
       '1',
@@ -60,14 +60,15 @@ describe('Fibonacci manipulation tests', () => {
     cy.get('@input').type(inputText);
     cy.get('@button').click();
 
+    cy.get('[data-test="circle"]').as('circles');
+
     for (let iteration = 1; iteration <= parseInt(inputText, 10); iteration++) {
-      cy.get('[data-test="circle"]').as('circles');
       cy.get('@circles')
         .should('have.length', iteration)
         .each((circle, index) => {
           cy.wrap(circle.find('[data-test="circle-letter"]'))
             .should('contain.text', fibonacciSequence[index])
-            .and('have.css', 'border-color', 'rgb(0, 50, 255)');
+            .and('have.css', 'border-color', colorDefault);
 
           cy.wrap(circle.find('[data-test="circle-index"]')).should(
             'contain.text',
@@ -75,7 +76,7 @@ describe('Fibonacci manipulation tests', () => {
           );
         });
 
-      cy.tick(animationDelay);
+      cy.tick(DELAY);
     }
   });
 });
