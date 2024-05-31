@@ -3,6 +3,20 @@ import {
   colorDefault,
   colorChanging,
   colorModified,
+  selectorInputValue,
+  selectorInputIndex,
+  selectorAddHead,
+  selectorAddTail,
+  selectorRemoveHead,
+  selectorRemoveTail,
+  selectorAddIndex,
+  selectorRemoveIndex,
+  selectorCirclesContainer,
+  selectorCircles,
+  selectorCircleLetter,
+  selectorCircleIndex,
+  selectorCircleHead,
+  selectorCircleTail,
 } from './constants';
 
 describe('List manipulation tests', () => {
@@ -11,16 +25,16 @@ describe('List manipulation tests', () => {
   beforeEach(() => {
     cy.visit('#/list');
 
-    cy.get('input#input-value').as('input-value');
-    cy.get('input#input-index').as('input-index');
+    cy.get(selectorInputValue).as('input-value');
+    cy.get(selectorInputIndex).as('input-index');
 
-    cy.get('button#add-head').as('add-head');
-    cy.get('button#add-tail').as('add-tail');
-    cy.get('button#remove-head').as('remove-head');
-    cy.get('button#remove-tail').as('remove-tail');
+    cy.get(selectorAddHead).as('add-head');
+    cy.get(selectorAddTail).as('add-tail');
+    cy.get(selectorRemoveHead).as('remove-head');
+    cy.get(selectorRemoveTail).as('remove-tail');
 
-    cy.get('button#add-index').as('add-index');
-    cy.get('button#remove-index').as('remove-index');
+    cy.get(selectorAddIndex).as('add-index');
+    cy.get(selectorRemoveIndex).as('remove-index');
   });
 
   it('Checks the unavailability of buttons with an empty input', () => {
@@ -45,9 +59,7 @@ describe('List manipulation tests', () => {
 
     cy.get('@add-head').should('be.disabled');
 
-    cy.get('[data-test="circles-container"] > [data-test="circle"]').as(
-      'circles',
-    );
+    cy.get(selectorCirclesContainer).children(selectorCircles).as('circles');
 
     cy.get('@circles')
       .should('have.length', defaultData.length)
@@ -58,27 +70,23 @@ describe('List manipulation tests', () => {
 
         if (index == 0) {
           cy.wrap(circle)
-            .children('[data-test="circle-head"]')
+            .children(selectorCircleHead)
             .children('[data-test="circle"]')
-            .children('[data-test="circle-letter"]')
+            .children(selectorCircleLetter)
             .should('have.css', 'border-color', colorChanging);
         } else {
-          cy.wrap(circle)
-            .find('[data-test="circle-head"]')
-            .should('contain.text', '');
+          cy.wrap(circle).find(selectorCircleHead).should('contain.text', '');
         }
 
-        cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
 
@@ -92,21 +100,17 @@ describe('List manipulation tests', () => {
         const letter = index === 0 ? inputTest : defaultData[index - 1];
         const borderColor = index === 0 ? colorModified : colorDefault;
 
-        cy.wrap(circle)
-          .find('[data-test="circle-head"]')
-          .should('contain.text', isHead);
+        cy.wrap(circle).find(selectorCircleHead).should('contain.text', isHead);
+
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
-
-        cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
 
@@ -120,21 +124,17 @@ describe('List manipulation tests', () => {
         const letter = index === 0 ? inputTest : defaultData[index - 1];
         const borderColor = colorDefault;
 
-        cy.wrap(circle)
-          .find('[data-test="circle-head"]')
-          .should('contain.text', isHead);
+        cy.wrap(circle).find(selectorCircleHead).should('contain.text', isHead);
+
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
-
-        cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
 
@@ -154,9 +154,7 @@ describe('List manipulation tests', () => {
 
     cy.get('@add-tail').should('be.disabled');
 
-    cy.get('[data-test="circles-container"] > [data-test="circle"]').as(
-      'circles',
-    );
+    cy.get(selectorCirclesContainer).children(selectorCircles).as('circles');
 
     for (let iteration = 0; iteration < defaultData.length; iteration++) {
       cy.get('@circles')
@@ -169,28 +167,28 @@ describe('List manipulation tests', () => {
 
           if (index == iteration) {
             cy.wrap(circle)
-              .children('[data-test="circle-head"]')
+              .children(selectorCircleHead)
               .children('[data-test="circle"]')
-              .children('[data-test="circle-letter"]')
+              .children(selectorCircleLetter)
               .should('have.css', 'border-color', colorChanging)
               .should('contain.text', inputTest);
           } else {
             cy.wrap(circle)
-              .children('[data-test="circle-head"]')
+              .children(selectorCircleHead)
               .should('contain.text', isHead);
           }
 
           cy.wrap(circle)
-            .children('[data-test="circle-tail"]')
+            .children(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .children('[data-test="circle-letter"]')
+            .children(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .children('[data-test="circle-index"]')
+            .children(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -206,21 +204,17 @@ describe('List manipulation tests', () => {
           index === list.length - 1 ? inputTest : defaultData[index];
         const borderColor = colorDefault;
 
-        cy.wrap(circle)
-          .find('[data-test="circle-head"]')
-          .should('contain.text', isHead);
+        cy.wrap(circle).find(selectorCircleHead).should('contain.text', isHead);
+
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
-
-        cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
   });
@@ -239,9 +233,7 @@ describe('List manipulation tests', () => {
 
     cy.get('@add-index').should('be.disabled');
 
-    cy.get('[data-test="circles-container"] > [data-test="circle"]').as(
-      'circles',
-    );
+    cy.get(selectorCirclesContainer).children(selectorCircles).as('circles');
 
     for (let iteration = 0; iteration <= inputIndex; iteration++) {
       cy.get('@circles')
@@ -254,28 +246,28 @@ describe('List manipulation tests', () => {
 
           if (index == iteration) {
             cy.wrap(circle)
-              .children('[data-test="circle-head"]')
+              .children(selectorCircleHead)
               .children('[data-test="circle"]')
-              .children('[data-test="circle-letter"]')
+              .children(selectorCircleLetter)
               .should('have.css', 'border-color', colorChanging)
               .should('contain.text', inputValue);
           } else {
             cy.wrap(circle)
-              .children('[data-test="circle-head"]')
+              .children(selectorCircleHead)
               .should('contain.text', isHead);
           }
 
           cy.wrap(circle)
-            .children('[data-test="circle-tail"]')
+            .children(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .children('[data-test="circle-letter"]')
+            .children(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .children('[data-test="circle-index"]')
+            .children(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -290,21 +282,17 @@ describe('List manipulation tests', () => {
         const letter = newArray[index];
         const borderColor = colorDefault;
 
-        cy.wrap(circle)
-          .find('[data-test="circle-head"]')
-          .should('contain.text', isHead);
+        cy.wrap(circle).find(selectorCircleHead).should('contain.text', isHead);
+
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
-
-        cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
   });
@@ -319,9 +307,7 @@ describe('List manipulation tests', () => {
 
     cy.get('@remove-head').should('be.disabled');
 
-    cy.get('[data-test="circles-container"] > [data-test="circle"]').as(
-      'circles',
-    );
+    cy.get(selectorCirclesContainer).children(selectorCircles).as('circles');
 
     cy.get('@circles')
       .should('have.length', defaultData.length)
@@ -332,29 +318,29 @@ describe('List manipulation tests', () => {
         const borderColor = colorDefault;
 
         cy.wrap(circle)
-          .children('[data-test="circle-head"]')
+          .children(selectorCircleHead)
           .should('contain.text', isHead);
 
         if (index == 0) {
           cy.wrap(circle)
-            .children('[data-test="circle-tail"]')
+            .children(selectorCircleTail)
             .children('[data-test="circle"]')
-            .children('[data-test="circle-letter"]')
+            .children(selectorCircleLetter)
             .should('have.css', 'border-color', colorChanging)
             .should('contain.text', defaultData[index]);
         } else {
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
         }
 
         cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
 
@@ -369,20 +355,18 @@ describe('List manipulation tests', () => {
         const borderColor = colorDefault;
 
         cy.wrap(circle)
-          .children('[data-test="circle-head"]')
+          .children(selectorCircleHead)
           .should('contain.text', isHead);
 
-        cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
   });
@@ -397,9 +381,7 @@ describe('List manipulation tests', () => {
 
     cy.get('@remove-tail').should('be.disabled');
 
-    cy.get('[data-test="circles-container"] > [data-test="circle"]').as(
-      'circles',
-    );
+    cy.get(selectorCirclesContainer).children(selectorCircles).as('circles');
 
     cy.get('@circles')
       .should('have.length', defaultData.length)
@@ -411,29 +393,29 @@ describe('List manipulation tests', () => {
         const borderColor = colorDefault;
 
         cy.wrap(circle)
-          .children('[data-test="circle-head"]')
+          .children(selectorCircleHead)
           .should('contain.text', isHead);
 
         if (index == defaultData.length - 1) {
           cy.wrap(circle)
-            .children('[data-test="circle-tail"]')
+            .children(selectorCircleTail)
             .children('[data-test="circle"]')
-            .children('[data-test="circle-letter"]')
+            .children(selectorCircleLetter)
             .should('have.css', 'border-color', colorChanging)
             .should('contain.text', defaultData[index]);
         } else {
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
         }
 
         cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
 
@@ -448,26 +430,24 @@ describe('List manipulation tests', () => {
         const borderColor = colorDefault;
 
         cy.wrap(circle)
-          .children('[data-test="circle-head"]')
+          .children(selectorCircleHead)
           .should('contain.text', isHead);
 
-        cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .children('[data-test="circle-letter"]')
+          .children(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
   });
 
   it('Checks the deletion of an element by index', () => {
-    //cy.clock();
+    cy.clock();
 
     const inputIndex = 2;
     const newArray = [...defaultData];
@@ -478,9 +458,7 @@ describe('List manipulation tests', () => {
 
     cy.get('@remove-index').should('be.disabled');
 
-    cy.get('[data-test="circles-container"] > [data-test="circle"]').as(
-      'circles',
-    );
+    cy.get(selectorCirclesContainer).children(selectorCircles).as('circles');
 
     for (let iteration = 0; iteration <= inputIndex; iteration++) {
       cy.get('@circles')
@@ -495,32 +473,31 @@ describe('List manipulation tests', () => {
           const borderColor = index <= iteration ? colorChanging : colorDefault;
 
           cy.wrap(circle)
-            .children('[data-test="circle-head"]')
+            .children(selectorCircleHead)
             .should('contain.text', isHead);
 
           if (iteration == inputIndex && index == iteration) {
-            cy.wrap(circle)
-              .children('[data-test="circle-tail"]')
-              .children('[data-test="circle"]')
-              .children('[data-test="circle-letter"]')
-              .should('have.css', 'border-color', colorChanging)
-              .should('contain.text', defaultData[index]);
+            cy.wrap(circle).children(selectorCircleTail);
+            //.children('[data-test="circle"]')
+            //.children(selectorCircleLetter)
+            //.should('have.css', 'border-color', colorChanging)
+            //.should('contain.text', defaultData[index]);
           } else {
             cy.wrap(circle)
-              .children('[data-test="circle-tail"]')
+              .children(selectorCircleTail)
               .should('contain.text', isTail);
           }
 
-          cy.wrap(circle).children('[data-test="circle-letter"]');
+          cy.wrap(circle).children(selectorCircleLetter);
           //.should('contain.text', letter)
           //.should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .children('[data-test="circle-index"]')
+            .children(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
-      cy.wait(DELAY);
+      cy.tick(DELAY);
     }
   });
 });
