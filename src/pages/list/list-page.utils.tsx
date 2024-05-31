@@ -12,6 +12,7 @@ import createNullCircle from 'utills/create-null-element';
 // Подключение интерфейсов
 import { ElementStates } from 'types/element-states';
 import { IElementArray } from 'types/element-array';
+import { nanoid } from 'nanoid';
 
 export interface IElementLinkedList extends IElementArray {
   head?: string | React.ReactElement | null;
@@ -48,7 +49,6 @@ async function animationAddHead(
     copyLinkedList.addToHead(newElement);
   } else {
     newElement.state = ElementStates.Changing;
-    head.state = ElementStates.Changing;
     head.head = creatSmallCircle(newElement);
     copyLinkedList.removeFromHead();
     copyLinkedList.addToHead(head);
@@ -85,18 +85,29 @@ async function animationAddTail(
     copyLinkedList.addToTail(newElement);
   } else {
     newElement.state = ElementStates.Changing;
-    tail.state = ElementStates.Changing;
-    tail.tail = creatSmallCircle(newElement);
-    copyLinkedList.removeFromTail();
-    copyLinkedList.addToTail(tail);
+    let i = 0;
+    while (i < arrayLinkedList.length) {
+      const element = arrayLinkedList[i];
+      element.state = ElementStates.Changing;
+      element.head = creatSmallCircle(newElement);
+      setLinkedList(createNewLinkedList(copyLinkedList));
+      await delay(animationTime);
+      element.head = null;
+      i++;
+    }
 
+    i = 0;
+    while (i < arrayLinkedList.length) {
+      const element = arrayLinkedList[i];
+      element.state = ElementStates.Default;
+      setLinkedList(createNewLinkedList(copyLinkedList));
+      i++;
+    }
+
+    newElement.state = ElementStates.Default;
+    copyLinkedList.addToTail(newElement);
     setLinkedList(createNewLinkedList(copyLinkedList));
     await delay(animationTime);
-
-    tail.state = ElementStates.Default;
-    tail.tail = null;
-    newElement.state = ElementStates.Modified;
-    copyLinkedList.addToTail(newElement);
   }
 
   setLinkedList(createNewLinkedList(copyLinkedList));
@@ -124,16 +135,15 @@ async function animationRemoveHead(
   copyLinkedList.addToHead(createNullCircle());
   const newHead = copyLinkedList.toArray()[0];
 
-  newHead.state = ElementStates.Changing;
-  newHead.head = creatSmallCircle(head);
+  head.state = ElementStates.Changing;
+  newHead.tail = creatSmallCircle(head);
   copyLinkedList.removeFromHead();
   copyLinkedList.addToHead(newHead);
 
   setLinkedList(createNewLinkedList(copyLinkedList));
   await delay(animationTime);
 
-  newHead.state = ElementStates.Default;
-  newHead.head = null;
+  newHead.tail = null;
   copyLinkedList.removeFromHead();
 
   setLinkedList(createNewLinkedList(copyLinkedList));
@@ -158,15 +168,14 @@ async function animationRemoveTail(
   arrayLinkedList = copyLinkedList.toArray();
   const newTail = arrayLinkedList[arrayLinkedList.length - 1];
 
-  newTail.state = ElementStates.Changing;
-  newTail.head = creatSmallCircle(tail);
+  tail.state = ElementStates.Changing;
+  newTail.tail = creatSmallCircle(tail);
   copyLinkedList.removeFromTail();
   copyLinkedList.addToTail(newTail);
 
   setLinkedList(createNewLinkedList(copyLinkedList));
   await delay(animationTime);
 
-  newTail.state = ElementStates.Default;
   newTail.head = null;
   copyLinkedList.removeFromTail();
 
@@ -185,25 +194,35 @@ async function animationAddIndex(
   const arrayLinkedList = copyLinkedList.toArray();
 
   if (arrayLinkedList.length == 0) {
-    return animationAddHead(newElement, linkedList, animationTime, setLinkedList);
+    return animationAddHead(
+      newElement,
+      linkedList,
+      animationTime,
+      setLinkedList,
+    );
   }
 
   newElement.state = ElementStates.Changing;
-
   let i = 0;
-  while (i <= index && i < arrayLinkedList.length) {
+  while (i < arrayLinkedList.length && i <= index) {
     const element = arrayLinkedList[i];
     element.state = ElementStates.Changing;
     element.head = creatSmallCircle(newElement);
     setLinkedList(createNewLinkedList(copyLinkedList));
     await delay(animationTime);
-    element.state = ElementStates.Default;
     element.head = null;
     i++;
   }
 
-  newElement.state = ElementStates.Default;
+  i = 0;
+  while (i < arrayLinkedList.length && i <= index) {
+    const element = arrayLinkedList[i];
+    element.state = ElementStates.Default;
+    setLinkedList(createNewLinkedList(copyLinkedList));
+    i++;
+  }
 
+  newElement.state = ElementStates.Default;
   copyLinkedList.insertAtIndex(newElement, index);
   setLinkedList(createNewLinkedList(copyLinkedList));
   await delay(animationTime);
@@ -223,26 +242,55 @@ async function animationRemoveIndex(
   }
 
   let i = 0;
-  while (i <= index) {
+  while (i < index) {
     const element = arrayLinkedList[i];
     element.state = ElementStates.Changing;
-    copyLinkedList.removeFromIndex(i);
-    const newElement: IElementLinkedList = createNullCircle();
-    newElement.head = creatSmallCircle(element);
-    newElement.state = ElementStates.Changing;
-    copyLinkedList.insertAtIndex(newElement, i);
     setLinkedList(createNewLinkedList(copyLinkedList));
     await delay(animationTime);
-    element.state = ElementStates.Default;
-    newElement.head = null;
-    newElement.content = element.content;
-    newElement.state = ElementStates.Default;
     i++;
   }
 
-  copyLinkedList.removeFromIndex(index);
+  const element = arrayLinkedList[index];
+  element.state = ElementStates.Changing;
+  copyLinkedList.removeFromIndex(i);
+  const newElement: IElementLinkedList = createNullCircle();
+  newElement.tail = creatSmallCircle(element);
+  newElement.state = ElementStates.Changing;
+  copyLinkedList.insertAtIndex(newElement, i);
   setLinkedList(createNewLinkedList(copyLinkedList));
   await delay(animationTime);
+  //element.state = ElementStates.Default;
+  //newElement.tail = null;
+  //newElement.content = element.content;
+  //newElement.state = ElementStates.Default;
+
+  //i = 0;
+  //while (i < index) {
+  //  const element = arrayLinkedList[i];
+  //  element.state = ElementStates.Default;
+  //  setLinkedList(createNewLinkedList(copyLinkedList));
+  //  i++;
+  //}
+
+  //copyLinkedList.removeFromIndex(index);
+  //setLinkedList(createNewLinkedList(copyLinkedList));
+  //await delay(animationTime);
+}
+
+function createDefaultLinkedList() {
+  const defaultData = [0, 34, 8, 1];
+  const linkedList = new LinkedList<IElementLinkedList>();
+
+  defaultData.forEach(data => {
+    const newElement: IElementLinkedList = {
+      content: data.toString(),
+      state: ElementStates.Default,
+      key: nanoid(),
+    };
+    linkedList.addToTail(newElement);
+  });
+
+  return linkedList;
 }
 
 export {
@@ -252,4 +300,5 @@ export {
   animationRemoveTail,
   animationAddIndex,
   animationRemoveIndex,
+  createDefaultLinkedList,
 };

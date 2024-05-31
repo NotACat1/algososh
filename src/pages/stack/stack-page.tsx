@@ -64,6 +64,7 @@ const StackPage: FC = () => {
     animateAdd(newValue, stack, SHORT_DELAY_IN_MS, setStack).then(() => {
       setAnimation({ animation: null, isAnimation: false });
     });
+    setInputValue('');
   };
 
   const elementsCircles =
@@ -94,7 +95,7 @@ const StackPage: FC = () => {
                 onChange={handleChange}
                 extraClass={styles.content__input}
                 value={inputValue}
-                data-testid="custom-input"
+                id="input"
               />
               <Button
                 text="Добавить"
@@ -107,7 +108,7 @@ const StackPage: FC = () => {
                 isLoader={
                   animation.isAnimation && animation.animation == Animations.Add
                 }
-                data-testid="custom-add"
+                id="add-button"
               />
               <Button
                 text="Удалить"
@@ -121,6 +122,7 @@ const StackPage: FC = () => {
                   animation.isAnimation &&
                   animation.animation == Animations.Remove
                 }
+                id="remove-button"
               />
             </div>
             <Button
@@ -134,6 +136,7 @@ const StackPage: FC = () => {
               isLoader={
                 animation.isAnimation && animation.animation == Animations.Clear
               }
+              id="cleare-button"
             />
           </div>
           <div className={styles.circles}>{elementsCircles}</div>
