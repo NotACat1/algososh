@@ -78,7 +78,7 @@ const SortingPage: FC = () => {
         });
 
   return (
-    <SolutionLayout title="Строка">
+    <SolutionLayout title="Сортировка массива">
       <>
         <div className={styles.container}>
           <div className={styles.inputs}>
@@ -90,6 +90,7 @@ const SortingPage: FC = () => {
                 defaultChecked={sortingMethod == SortingMethod.SELECTION_SORT}
                 onClick={handleChangeMethodQuickSort}
                 disabled={false}
+                data-testid="custom-sort-selection"
               />
               <RadioInput
                 label="Пузырёк"
@@ -98,6 +99,7 @@ const SortingPage: FC = () => {
                 defaultChecked={sortingMethod == SortingMethod.BUBBLE_SORT}
                 onClick={handleChangeMethodBubbleSort}
                 disabled={false}
+                data-testid="custom-sort-bobule"
               />
             </div>
             <div className={styles.inputs__buttons}>

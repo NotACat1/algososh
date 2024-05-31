@@ -31,12 +31,10 @@ const StackPage: FC = () => {
   const [stack, setStack] = useState<Stack<IElementArray>>(
     new Stack<IElementArray>(),
   );
-  const [animation, setAnimation] =
-    useState <
-    IStateAnimation<Animations>>({
-      animation: null,
-      isAnimation: false,
-    });
+  const [animation, setAnimation] = useState<IStateAnimation<Animations>>({
+    animation: null,
+    isAnimation: false,
+  });
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setInputValue(evt.target.value);
@@ -66,6 +64,7 @@ const StackPage: FC = () => {
     animateAdd(newValue, stack, SHORT_DELAY_IN_MS, setStack).then(() => {
       setAnimation({ animation: null, isAnimation: false });
     });
+    setInputValue('');
   };
 
   const elementsCircles =
@@ -96,6 +95,7 @@ const StackPage: FC = () => {
                 onChange={handleChange}
                 extraClass={styles.content__input}
                 value={inputValue}
+                id="input"
               />
               <Button
                 text="Добавить"
@@ -108,6 +108,7 @@ const StackPage: FC = () => {
                 isLoader={
                   animation.isAnimation && animation.animation == Animations.Add
                 }
+                id="add-button"
               />
               <Button
                 text="Удалить"
@@ -121,6 +122,7 @@ const StackPage: FC = () => {
                   animation.isAnimation &&
                   animation.animation == Animations.Remove
                 }
+                id="remove-button"
               />
             </div>
             <Button
@@ -134,6 +136,7 @@ const StackPage: FC = () => {
               isLoader={
                 animation.isAnimation && animation.animation == Animations.Clear
               }
+              id="cleare-button"
             />
           </div>
           <div className={styles.circles}>{elementsCircles}</div>
