@@ -22,6 +22,7 @@ import {
   animationAddIndex,
   animationRemoveIndex,
   IElementLinkedList,
+  createDefaultLinkedList,
 } from './list-page.utils';
 
 // Подключение интерфейсов
@@ -43,7 +44,7 @@ const ListPage: FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [inputIndex, setInputIndex] = useState<string>('');
   const [linkedList, setLinkedList] = useState<LinkedList<IElementLinkedList>>(
-    new LinkedList<IElementLinkedList>(),
+    createDefaultLinkedList(),
   );
   const [animation, setAnimation] = useState<IStateAnimation<Animations>>({
     animation: null,
@@ -185,7 +186,7 @@ const ListPage: FC = () => {
               disabled={animation.isAnimation}
               onChange={handleChangeValue}
               value={inputValue}
-              data-testid="custom-input-value"
+              id="input-value"
             />
             <Button
               text="Добавить в head"
@@ -199,7 +200,7 @@ const ListPage: FC = () => {
                 animation.isAnimation &&
                 animation.animation == Animations.AddToHead
               }
-              data-testid="custom-add-head"
+              id="add-head"
             />
             <Button
               text="Добавить в tail"
@@ -213,7 +214,7 @@ const ListPage: FC = () => {
                 animation.isAnimation &&
                 animation.animation == Animations.AddToTail
               }
-              data-testid="custom-add-tail"
+              id="add-tail"
             />
             <Button
               text="Удалить из head"
@@ -225,7 +226,7 @@ const ListPage: FC = () => {
                 animation.isAnimation &&
                 animation.animation == Animations.RemoveFromHead
               }
-              data-testid="custom-remove-head"
+              id="remove-head"
             />
             <Button
               text="Удалить из tail"
@@ -237,7 +238,7 @@ const ListPage: FC = () => {
                 animation.isAnimation &&
                 animation.animation == Animations.RemoveFromTail
               }
-              data-testid="custom-remove-tail"
+              id="remove-tail"
             />
             <Input
               min={0}
@@ -257,9 +258,10 @@ const ListPage: FC = () => {
               disabled={animation.isAnimation}
               onChange={handleChangeIndex}
               value={inputIndex}
-              data-testid="custom-input-index"
+              id="input-index"
             />
             <Button
+              extraClass={styles.big}
               text="Добавить по индексу"
               disabled={
                 animation.isAnimation ||
@@ -279,9 +281,10 @@ const ListPage: FC = () => {
                 animation.isAnimation &&
                 animation.animation == Animations.AddIndex
               }
-              data-testid="custom-add-index"
+              id="add-index"
             />
             <Button
+              extraClass={styles.big}
               text="Удалить по индексу"
               disabled={
                 animation.isAnimation ||
@@ -300,10 +303,12 @@ const ListPage: FC = () => {
                 animation.isAnimation &&
                 animation.animation == Animations.RemoveIndex
               }
-              data-testid="custom-remove-index"
+              id="remove-index"
             />
           </div>
-          <div className={styles.circles}>{elementsCircles}</div>
+          <div className={styles.circles} data-test="circles-container">
+            {elementsCircles}
+          </div>
         </div>
       </>
     </SolutionLayout>
