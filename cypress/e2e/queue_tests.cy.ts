@@ -5,7 +5,7 @@ import {
 } from './constants';
 
 describe('Queue manipulation tests', () => {
-  const maxSize = 5;
+  const maxSize = 7;
   const maxLengthInput = 4;
 
   beforeEach(() => {

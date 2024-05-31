@@ -26,7 +26,7 @@ enum Animations {
   Clear = 'clear',
 }
 
-const maxSize = 5;
+const maxSize = 7;
 
 const QueuePage: FC = () => {
   // состояние для элементов строки
