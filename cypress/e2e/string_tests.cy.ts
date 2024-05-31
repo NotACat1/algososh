@@ -3,6 +3,10 @@ import {
   colorDefault,
   colorChanging,
   colorModified,
+  selectorInput,
+  selectorAdd,
+  selectorCircles,
+  selectorCircleLetter,
 } from './constants';
 
 describe('String manipulation tests', () => {
@@ -11,8 +15,8 @@ describe('String manipulation tests', () => {
   beforeEach(() => {
     cy.visit('#/recursion');
 
-    cy.get('input#input').as('input');
-    cy.get('button#add-button').as('button');
+    cy.get(selectorInput).as('input');
+    cy.get(selectorAdd).as('button');
   });
 
   it('should disable the add button when the input is empty', () => {
@@ -42,12 +46,12 @@ describe('String manipulation tests', () => {
     // Убедиться, что кнопка добавления отключена во время анимации
     cy.get('@button').should('be.disabled');
 
-    cy.get('[data-test="circle"]').as('circles');
+    cy.get(selectorCircles).as('circles');
     cy.get('@circles')
       .should('have.length', inputString.length)
       .each((circle, index) => {
         cy.wrap(circle)
-          .find('[data-test="circle-letter"]')
+          .find(selectorCircleLetter)
           .should('contain.text', inputString[index])
           .and('have.css', 'border-color', colorDefault);
       });
@@ -68,17 +72,17 @@ describe('String manipulation tests', () => {
         .each((circle, index) => {
           if (index < indexStart || index > indexEnd) {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', reversedString[index])
               .and('have.css', 'border-color', colorModified);
           } else if (index == indexStart || index == indexEnd) {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', inputString[index])
               .and('have.css', 'border-color', colorChanging);
           } else {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', inputString[index])
               .and('have.css', 'border-color', colorDefault);
           }
@@ -91,12 +95,12 @@ describe('String manipulation tests', () => {
         .each((circle, index) => {
           if (index <= indexStart || index >= indexEnd) {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', reversedString[index])
               .and('have.css', 'border-color', colorModified);
           } else
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', inputString[index])
               .and('have.css', 'border-color', colorDefault);
         });
@@ -111,7 +115,7 @@ describe('String manipulation tests', () => {
       .should('have.length', reversedString.length)
       .each((circle, index) => {
         cy.wrap(circle)
-          .find('[data-test="circle-letter"]')
+          .find(selectorCircleLetter)
           .should('contain.text', reversedString[index])
           .and('have.css', 'border-color', colorModified);
       });

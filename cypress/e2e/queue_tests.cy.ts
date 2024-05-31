@@ -2,6 +2,15 @@ import {
   SHORT_DELAY_IN_MS as DELAY,
   colorDefault,
   colorChanging,
+  selectorInput,
+  selectorAdd,
+  selectorRemove,
+  selectorCleare,
+  selectorCircles,
+  selectorCircleHead,
+  selectorCircleTail,
+  selectorCircleIndex,
+  selectorCircleLetter,
 } from './constants';
 
 describe('Queue manipulation tests', () => {
@@ -11,10 +20,10 @@ describe('Queue manipulation tests', () => {
   beforeEach(() => {
     cy.visit('#/queue');
 
-    cy.get('input#input').as('input');
-    cy.get('button#add-button').as('add-button');
-    cy.get('button#remove-button').as('remove-button');
-    cy.get('button#cleare-button').as('cleare-button');
+    cy.get(selectorInput).as('input');
+    cy.get(selectorAdd).as('add-button');
+    cy.get(selectorRemove).as('remove-button');
+    cy.get(selectorCleare).as('cleare-button');
   });
 
   it('should disable add button if input is empty', () => {
@@ -43,7 +52,7 @@ describe('Queue manipulation tests', () => {
 
       cy.get('@add-button').should('be.disabled');
 
-      cy.get('[data-test="circle"]').as('circles');
+      cy.get(selectorCircles).as('circles');
       cy.get('@circles')
         .should('have.length', maxSize)
         .each((circle, index) => {
@@ -54,20 +63,20 @@ describe('Queue manipulation tests', () => {
             index === iteration ? colorChanging : colorDefault;
 
           cy.wrap(circle)
-            .find('[data-test="circle-head"]')
+            .find(selectorCircleHead)
             .should('contain.text', isHead);
 
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .find('[data-test="circle-letter"]')
+            .find(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -82,20 +91,20 @@ describe('Queue manipulation tests', () => {
           const borderColor = colorDefault;
 
           cy.wrap(circle)
-            .find('[data-test="circle-head"]')
+            .find(selectorCircleHead)
             .should('contain.text', isHead);
 
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .find('[data-test="circle-letter"]')
+            .find(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -110,20 +119,20 @@ describe('Queue manipulation tests', () => {
           const borderColor = colorDefault;
 
           cy.wrap(circle)
-            .find('[data-test="circle-head"]')
+            .find(selectorCircleHead)
             .should('contain.text', isHead);
 
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .find('[data-test="circle-letter"]')
+            .find(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -151,7 +160,7 @@ describe('Queue manipulation tests', () => {
 
       cy.get('@remove-button').should('be.disabled');
 
-      cy.get('[data-test="circle"]').as('circles');
+      cy.get(selectorCircles).as('circles');
       cy.get('@circles')
         .should('have.length', maxSize)
         .each((circle, index) => {
@@ -162,20 +171,20 @@ describe('Queue manipulation tests', () => {
             index === iteration ? colorChanging : colorDefault;
 
           cy.wrap(circle)
-            .find('[data-test="circle-head"]')
+            .find(selectorCircleHead)
             .should('contain.text', isHead);
 
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .find('[data-test="circle-letter"]')
+            .find(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -190,20 +199,20 @@ describe('Queue manipulation tests', () => {
           const borderColor = colorDefault;
 
           cy.wrap(circle)
-            .find('[data-test="circle-head"]')
+            .find(selectorCircleHead)
             .should('contain.text', isHead);
 
           cy.wrap(circle)
-            .find('[data-test="circle-tail"]')
+            .find(selectorCircleTail)
             .should('contain.text', isTail);
 
           cy.wrap(circle)
-            .find('[data-test="circle-letter"]')
+            .find(selectorCircleLetter)
             .should('contain.text', letter)
             .should('have.css', 'border-color', borderColor);
 
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -226,7 +235,7 @@ describe('Queue manipulation tests', () => {
 
     cy.get('@cleare-button').should('be.disabled');
 
-    cy.get('[data-test="circle"]').as('circles');
+    cy.get(selectorCircles).as('circles');
     cy.get('@circles')
       .should('have.length', maxSize)
       .each((circle, index) => {
@@ -235,21 +244,17 @@ describe('Queue manipulation tests', () => {
         const letter = '';
         const borderColor = colorDefault;
 
-        cy.wrap(circle)
-          .find('[data-test="circle-head"]')
-          .should('contain.text', isHead);
+        cy.wrap(circle).find(selectorCircleHead).should('contain.text', isHead);
+
+        cy.wrap(circle).find(selectorCircleTail).should('contain.text', isTail);
 
         cy.wrap(circle)
-          .find('[data-test="circle-tail"]')
-          .should('contain.text', isTail);
-
-        cy.wrap(circle)
-          .find('[data-test="circle-letter"]')
+          .find(selectorCircleLetter)
           .should('contain.text', letter)
           .should('have.css', 'border-color', borderColor);
 
         cy.wrap(circle)
-          .find('[data-test="circle-index"]')
+          .find(selectorCircleIndex)
           .should('contain.text', index.toString());
       });
   });

@@ -1,4 +1,12 @@
-import { SHORT_DELAY_IN_MS as DELAY, colorDefault } from './constants';
+import {
+  SHORT_DELAY_IN_MS as DELAY,
+  colorDefault,
+  selectorInput,
+  selectorButton,
+  selectorCircles,
+  selectorCircleLetter,
+  selectorCircleIndex,
+} from './constants';
 
 describe('Fibonacci manipulation tests', () => {
   let fibonacciSequence: string[];
@@ -6,8 +14,8 @@ describe('Fibonacci manipulation tests', () => {
   beforeEach(() => {
     cy.visit('#/fibonacci');
 
-    cy.get('input#input').as('input');
-    cy.get('button#button').as('button');
+    cy.get(selectorInput).as('input');
+    cy.get(selectorButton).as('button');
     fibonacciSequence = [
       '0',
       '1',
@@ -60,17 +68,17 @@ describe('Fibonacci manipulation tests', () => {
     cy.get('@input').type(inputText);
     cy.get('@button').click();
 
-    cy.get('[data-test="circle"]').as('circles');
+    cy.get(selectorCircles).as('circles');
 
     for (let iteration = 1; iteration <= parseInt(inputText, 10); iteration++) {
       cy.get('@circles')
         .should('have.length', iteration)
         .each((circle, index) => {
-          cy.wrap(circle.find('[data-test="circle-letter"]'))
+          cy.wrap(circle.find(selectorCircleLetter))
             .should('contain.text', fibonacciSequence[index])
             .and('have.css', 'border-color', colorDefault);
 
-          cy.wrap(circle.find('[data-test="circle-index"]')).should(
+          cy.wrap(circle.find(selectorCircleIndex)).should(
             'contain.text',
             index,
           );

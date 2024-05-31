@@ -31,27 +31,3 @@ exports[`Button component renders loading indicator 1`] = `
   src="loader.svg"
 />
 `;
-
-exports[`Button component кнопки без текста 1`] = `
-<button
-  class="text_type_button text_color_primary button undefined false "
-  type="button"
->
-  <p
-    class="text undefined"
-  />
-</button>
-`;
-
-exports[`Button component кнопки с текстом 1`] = `
-<button
-  class="text_type_button text_color_primary button undefined false "
-  type="button"
->
-  <p
-    class="text undefined"
-  >
-    Click me
-  </p>
-</button>
-`;

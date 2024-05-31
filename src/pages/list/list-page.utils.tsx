@@ -259,22 +259,22 @@ async function animationRemoveIndex(
   copyLinkedList.insertAtIndex(newElement, i);
   setLinkedList(createNewLinkedList(copyLinkedList));
   await delay(animationTime);
-  //element.state = ElementStates.Default;
-  //newElement.tail = null;
-  //newElement.content = element.content;
-  //newElement.state = ElementStates.Default;
+  element.state = ElementStates.Default;
+  newElement.tail = null;
+  newElement.content = element.content;
+  newElement.state = ElementStates.Default;
 
-  //i = 0;
-  //while (i < index) {
-  //  const element = arrayLinkedList[i];
-  //  element.state = ElementStates.Default;
-  //  setLinkedList(createNewLinkedList(copyLinkedList));
-  //  i++;
-  //}
+  i = 0;
+  while (i < index) {
+    const element = arrayLinkedList[i];
+    element.state = ElementStates.Default;
+    setLinkedList(createNewLinkedList(copyLinkedList));
+    i++;
+  }
 
-  //copyLinkedList.removeFromIndex(index);
-  //setLinkedList(createNewLinkedList(copyLinkedList));
-  //await delay(animationTime);
+  copyLinkedList.removeFromIndex(index);
+  setLinkedList(createNewLinkedList(copyLinkedList));
+  await delay(animationTime);
 }
 
 function createDefaultLinkedList() {

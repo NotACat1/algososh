@@ -2,16 +2,24 @@ import {
   SHORT_DELAY_IN_MS as DELAY,
   colorDefault,
   colorChanging,
+  selectorInput,
+  selectorAdd,
+  selectorRemove,
+  selectorCleare,
+  selectorCircles,
+  selectorCircleLetter,
+  selectorCircleHead,
+  selectorCircleIndex,
 } from './constants';
 
 describe('Stack manipulation tests', () => {
   beforeEach(() => {
     cy.visit('#/stack');
 
-    cy.get('input#input').as('input');
-    cy.get('button#add-button').as('add-button');
-    cy.get('button#remove-button').as('remove-button');
-    cy.get('button#cleare-button').as('cleare-button');
+    cy.get(selectorInput).as('input');
+    cy.get(selectorAdd).as('add-button');
+    cy.get(selectorRemove).as('remove-button');
+    cy.get(selectorCleare).as('cleare-button');
   });
 
   it('should disable the add button when the input is empty', () => {
@@ -40,33 +48,33 @@ describe('Stack manipulation tests', () => {
 
       cy.get('@add-button').should('be.disabled');
 
-      cy.get('[data-test="circle"]').as('circles');
+      cy.get(selectorCircles).as('circles');
       cy.get('@circles')
         .should('have.length', iteration + 1)
         .each((circle, index, list) => {
           if (index === list.length - 1) {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', tests[index])
               .and('have.css', 'border-color', colorChanging);
 
             cy.wrap(circle)
-              .find('[data-test="circle-head"]')
+              .find(selectorCircleHead)
               .should('contain.text', 'top');
           } else {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', tests[index])
               .and('have.css', 'border-color', colorDefault);
 
             cy.wrap(circle)
-              .find('[data-test="circle-head"]')
+              .find(selectorCircleHead)
               .should('not.contain.text', 'top');
           }
 
           // Проверяем, что следующий элемент содержит правильный индекс
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -76,23 +84,23 @@ describe('Stack manipulation tests', () => {
         .should('have.length', iteration + 1)
         .each((circle, index, list) => {
           cy.wrap(circle)
-            .find('[data-test="circle-letter"]')
+            .find(selectorCircleLetter)
             .should('contain.text', tests[index])
             .and('have.css', 'border-color', colorDefault);
 
           if (index === list.length - 1) {
             cy.wrap(circle)
-              .find('[data-test="circle-head"]')
+              .find(selectorCircleHead)
               .should('contain.text', 'top');
           } else {
             cy.wrap(circle)
-              .find('[data-test="circle-head"]')
+              .find(selectorCircleHead)
               .should('not.contain.text', 'top');
           }
 
           // Проверяем, что следующий элемент содержит правильный индекс
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -119,33 +127,33 @@ describe('Stack manipulation tests', () => {
     for (let iteration = 1; iteration <= addData.length; iteration++) {
       cy.get('@remove-button').click();
 
-      cy.get('[data-test="circle"]').as('circles');
+      cy.get(selectorCircles).as('circles');
       cy.get('@circles')
         .should('have.length', addData.length - (iteration - 1))
         .each((circle, index, list) => {
           if (index === list.length - 1) {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', addData[index])
               .and('have.css', 'border-color', colorChanging);
 
             cy.wrap(circle)
-              .find('[data-test="circle-head"]')
+              .find(selectorCircleHead)
               .should('contain.text', 'top');
           } else {
             cy.wrap(circle)
-              .find('[data-test="circle-letter"]')
+              .find(selectorCircleLetter)
               .should('contain.text', addData[index])
               .and('have.css', 'border-color', colorDefault);
 
             cy.wrap(circle)
-              .find('[data-test="circle-head"]')
+              .find(selectorCircleHead)
               .should('not.contain.text', 'top');
           }
 
           // Проверяем, что следующий элемент содержит правильный индекс
           cy.wrap(circle)
-            .find('[data-test="circle-index"]')
+            .find(selectorCircleIndex)
             .should('contain.text', index.toString());
         });
 
@@ -172,7 +180,7 @@ describe('Stack manipulation tests', () => {
 
     cy.get('@cleare-button').click();
     cy.get('@cleare-button').should('be.disabled');
-    cy.get('[data-test="circle"]').should('not.exist');
+    cy.get(selectorCircles).should('not.exist');
 
     cy.get('@cleare-button').should('be.disabled');
   });
