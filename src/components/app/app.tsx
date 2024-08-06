@@ -31,7 +31,7 @@ const router = createHashRouter([
         element: <FibonacciPage />,
       },
       {
-        path: 'arr',
+        path: 'sorting',
         element: <SortingPage />,
       },
       {

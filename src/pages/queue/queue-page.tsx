@@ -26,7 +26,7 @@ enum Animations {
   Clear = 'clear',
 }
 
-const maxSize = 5;
+const maxSize = 7;
 
 const QueuePage: FC = () => {
   // состояние для элементов строки
@@ -67,6 +67,7 @@ const QueuePage: FC = () => {
     animateAdd(newValue, queue, SHORT_DELAY_IN_MS).then(() => {
       setAnimation({ animation: null, isAnimation: false });
     });
+    setInputValue('');
   };
 
   const elementsCircles = queue.toArray().map((element, index) => {
@@ -102,6 +103,7 @@ const QueuePage: FC = () => {
                 onChange={handleChange}
                 extraClass={styles.content__input}
                 value={inputValue}
+                id="input"
               />
               <Button
                 text="Добавить"
@@ -114,6 +116,7 @@ const QueuePage: FC = () => {
                 isLoader={
                   animation.isAnimation && animation.animation == Animations.Add
                 }
+                id="add-button"
               />
               <Button
                 text="Удалить"
@@ -123,6 +126,7 @@ const QueuePage: FC = () => {
                   animation.isAnimation &&
                   animation.animation == Animations.Remove
                 }
+                id="remove-button"
               />
             </div>
             <Button
@@ -132,6 +136,7 @@ const QueuePage: FC = () => {
               isLoader={
                 animation.isAnimation && animation.animation == Animations.Clear
               }
+              id="cleare-button"
             />
           </div>
           <div className={styles.circles}>{elementsCircles}</div>

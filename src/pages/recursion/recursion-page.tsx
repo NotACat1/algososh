@@ -65,12 +65,14 @@ const RecursionPage: FC = () => {
               onChange={handleChange}
               extraClass={styles.input__input}
               value={inputValue}
+              id="input"
             />
             <Button
               text="Развернуть"
               disabled={inputValue.length == 0 || isAnimated}
               onClick={handleClick}
               isLoader={isAnimated}
+              id="add-button"
             />
           </div>
           <div className={styles.circles}>{elementsCircles}</div>

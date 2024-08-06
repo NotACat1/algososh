@@ -30,7 +30,7 @@ const cardsData = [
   {
     image: arrImage,
     imageHover: arrHoverImage,
-    to: 'arr',
+    to: 'sorting',
   },
   {
     image: stackImage,
